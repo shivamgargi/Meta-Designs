@@ -1,0 +1,69 @@
+<h1>User Data</h1>
+<p>
+	<%= form_tag("/get_info", :method => "get") do %>
+	  <%= label_tag(:q, "Choose file to update user info:") %>
+	  <p><%= file_field_tag(:file, accept: ".csv") %></p>
+	  <p><%= submit_tag("Submit") %></p>
+	<% end %>
+</p>
+
+
+<%if @user.present? %>
+	<div class="container">
+		<table>
+		  <thead>
+		    <th>First Name</th>
+		    <th>Last Name</th>
+		    <th>Email</th>
+		  </thead>
+			<tbody>
+	  		<% @user.each do |user| %>
+			    <tr>
+			      <td><%= user.first_name%></td>
+			      <td><%= user.last_name%></td>
+			      <td><%= user.email_id%></td>
+			    </tr>
+			  <%end%>
+			</tbody>
+		</table>
+		<table>
+		  <thead>
+		    <th>Data count successfully updated</th>
+		  </thead>
+			<tbody>
+		    <tr>
+		      <td><%= @user.count%></td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+<%end%>
+
+<%if $err.present? %>
+	<div class="container">
+		<table>
+		  <thead>
+		    <th>Err Name</th>
+		    <th>Email</th>
+		  </thead>
+			<tbody>
+	  		<% $err.flatten.each do |error| %>
+			    <tr>
+			      <td><%= error[:error]%></td>
+			      <td><%= error[:email]%></td>
+			    </tr>
+			  <%end%>
+			</tbody>
+		</table>
+		<table>
+		  <thead>
+		    <th>Error Count</th>
+		  </thead>
+			<tbody>
+		    <tr>
+		      <td><%= $err.count%></td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+<%end%>
